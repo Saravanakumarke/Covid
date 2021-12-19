@@ -11,7 +11,7 @@ export default function Details() {
     getdata();
   }, []);
 
-  console.log(details.AN.districts.Nicobars.delta7.vaccinated1);
+  let states = Object.keys(details);
   const options = [
     { id: 1, Label: "Sort By", value: "" },
     { id: 1, Label: "Ascending", value: "asce" },

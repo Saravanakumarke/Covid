@@ -5,6 +5,7 @@ import styles from "./styles.module.css";
 export default function Home() {
   const [details, setDetails] = useState(null || {});
   const [dataval, setdataval] = useState(null);
+  const [statedata, setstatedata] = useState([]);
   useEffect(() => {
     const getdata = async () => {
       await fetch("https://data.covid19india.org/v4/min/data.min.json")
@@ -13,16 +14,20 @@ export default function Home() {
     };
 
     getdata();
+    console.log(details);
     //   getdataone();
   }, []);
-
+  let states = Object.keys(details);
+  console.log(states[0]);
+  // let dis = details[states[0]].districts;
+  // console.log(Object.keys(dis));
   const options = [
     { id: 1, Label: "Sort By", value: "" },
     { id: 1, Label: "Ascending", value: "asce" },
     { id: 2, Label: "Descending", value: "desce" },
   ];
   const [searchvalue, setsearchvalue] = useState("");
-  const [searchbydate, setsearchbydate] = useState(new Date());
+  const [searchbydate, setsearchbydate] = useState();
   const [sortval, setsortval] = useState("");
   const onInputchange = (e) => {
     setsearchvalue(e.target.value);
@@ -32,6 +37,16 @@ export default function Home() {
   };
   const handledate = (e) => {
     setsearchbydate(e.target.value);
+    console.log(searchbydate);
+  };
+  let temp = null || [];
+  const convertdid = (stateval) => {
+    console.log("check", stateval);
+    // temp = details[stateval].districts;
+    temp = Object.keys(details[stateval].districts);
+    console.log(temp);
+    //setstatedata(Object.keys(temp));
+    // console.log(statedata);
   };
   return (
     <div>
@@ -72,9 +87,9 @@ export default function Home() {
         </div>
       </div>
 
-      {Object.keys(details).length > 0 ? (
+      {states.length > 0 ? (
         <div className={styles.flexwrapper}>
-          {Object.keys(details).map((x) => (
+          {states.map((x, index) => (
             <div className={styles.card}>
               <div className={styles.heading}>
                 <p className={styles.statename}>{x}</p>
@@ -83,7 +98,8 @@ export default function Home() {
                   // value={sortval}
                   // onChange={handledropdown}
                 >
-                  {details[x].districts.map((y) => {
+                  {Object.keys(details[x].districts).map((y) => {
+                    console.log(y);
                     return <option value={y}>{y}</option>;
                   })}
                 </select>
