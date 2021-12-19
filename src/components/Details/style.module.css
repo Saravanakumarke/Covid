@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+nav {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+  width: 100%;
+  position: relative;
+  display: block;
+  font-family: Poppins;
+  background-color: rgba(234, 243, 237, 0.125);
+  top: 0;
+}
+.heading {
+  padding: 0.625rem;
+  font-size: 1.5rem;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: Poppins;
+}
+.searchbar {
+  padding-top: 2rem;
+  padding-left: 5em;
+}
+
+.search {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 2.5em;
+  width: 20em;
+  font-family: Poppins;
+}
+input[type="text"]::placeholder {
+  padding-left: 10px;
+}
+input:focus {
+  background-color: #fff;
+  border: 0.25px solid #655afc;
+  outline: none;
+}
+.select {
+  border-radius: 0.25rem;
+  height: 2.3125rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  width: 20em;
+}
+
+.select:hover {
+  border: 1px solid rgb(0, 0, 0);
+}
+
+/**Table **/
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 50px auto;
+  font-family: Poppins;
+}
+
+th {
+  background-color: #f6f8fa;
+  color: #000;
+  border: 1px solid #e1e4e8;
+  font-weight: bold;
+  padding: 10px;
+  text-align: left;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid #e1e4e8;
+  text-align: left;
+  font-size: 14px;
+}
+
+@media only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px) {
+  table {
+    width: 100%;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border: 1px solid #ccc;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    content: attr(data-column);
+
+    color: #000;
+    font-weight: bold;
+  }
+}
