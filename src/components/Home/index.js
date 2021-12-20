@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Cards from "../Cards";
 import styles from "./styles.module.css";
+import { useHistory } from "react-router-dom";
 
 export default function Home() {
+  const history = useHistory();
   const [details, setDetails] = useState(null || {});
-  const [dataval, setdataval] = useState(null);
-  const [statedata, setstatedata] = useState([]);
+  const [flage, setflage] = useState(false);
+  let data = [];
   useEffect(() => {
     const getdata = async () => {
       await fetch("https://data.covid19india.org/v4/min/data.min.json")
@@ -14,107 +15,277 @@ export default function Home() {
     };
 
     getdata();
-    console.log(details);
-    //   getdataone();
   }, []);
-  let states = Object.keys(details);
-  console.log(states[0]);
-  // let dis = details[states[0]].districts;
-  // console.log(Object.keys(dis));
+  let searchdata = [];
+  data = Object.keys(details);
+  const [searchvalue, setsearchvalue] = useState("");
+  const [searchbydate, setsearchbydate] = useState(new Date());
+  const [sortval, setsortval] = useState("asce");
+  const [districts, setdistricts] = useState("");
+
+  //console.log(details ? details.AN.districts.Nicobars.total.vaccinated1 : null);
   const options = [
     { id: 1, Label: "Sort By", value: "" },
-    { id: 1, Label: "Ascending", value: "asce" },
-    { id: 2, Label: "Descending", value: "desce" },
+    { id: 2, Label: "Ascending", value: "asce" },
+    { id: 3, Label: "Descending", value: "desce" },
   ];
-  const [searchvalue, setsearchvalue] = useState("");
-  const [searchbydate, setsearchbydate] = useState();
-  const [sortval, setsortval] = useState("");
-  const onInputchange = (e) => {
-    setsearchvalue(e.target.value);
-  };
-  const handledropdown = (e) => {
-    setsortval(e.target.value);
-  };
-  const handledate = (e) => {
-    setsearchbydate(e.target.value);
-    console.log(searchbydate);
-  };
-  let temp = null || [];
-  const convertdid = (stateval) => {
-    console.log("check", stateval);
-    // temp = details[stateval].districts;
-    temp = Object.keys(details[stateval].districts);
-    console.log(temp);
-    //setstatedata(Object.keys(temp));
-    // console.log(statedata);
-  };
-  return (
-    <div>
-      <nav>
-        <div className={styles.heading}>Covid Tracker - INDIA</div>
-      </nav>
-      <div className={styles.container}>
-        <div className={styles.searchbar}>States</div>
-        <div className={styles.searchbar}>
-          <input
-            type="text"
-            className={styles.search}
-            placeholder="Search Name…"
-            value={searchvalue}
-            onChange={onInputchange}
-            // onKeyDown={_onKeydown}
-          />
-        </div>
-        <div className={styles.searchbar}>
-          <input
-            type="date"
-            className={styles.search}
-            placeholder="Search Name…"
-            value={searchbydate}
-            onChange={handledate}
-          />
-        </div>
-        <div className={styles.searchbar}>
-          <select
-            className={styles.select}
-            value={sortval}
-            onChange={handledropdown}
-          >
-            {options.map((option) => {
-              return <option value={option.value}>{option.Label}</option>;
-            })}
-          </select>
-        </div>
-      </div>
 
-      {states.length > 0 ? (
-        <div className={styles.flexwrapper}>
-          {states.map((x, index) => (
-            <div className={styles.card}>
-              <div className={styles.heading}>
-                <p className={styles.statename}>{x}</p>
-                <select
-                  className={styles.select}
-                  // value={sortval}
-                  // onChange={handledropdown}
-                >
-                  {Object.keys(details[x].districts).map((y) => {
-                    console.log(y);
-                    return <option value={y}>{y}</option>;
-                  })}
-                </select>
-              </div>
-              <div className={styles.content}>
-                <p>{details[x].delta.tested}</p>
-                <p>SASASA</p>
-                <p>SASASA</p>
-              </div>
-            </div>
-          ))}
+  const handlepage = (x) => {
+    console.log(details[x]);
+    history.push({
+      pathname: `/state/${x}`,
+      state: details[x],
+    });
+  };
+  if (searchvalue.length > 0) {
+    searchdata = data.filter((x) => x == searchvalue.toUpperCase());
+    console.log(searchdata);
+  }
+
+  console.log(districts);
+  let renderUI = () => {
+    return (
+      <div>
+        <nav>
+          <div className={styles.heading}>Covid Tracker - INDIA</div>
+        </nav>
+        <div className={styles.container}>
+          <div className={styles.searchbar}>States</div>
+          <div className={styles.searchbar}>
+            <input
+              type="text"
+              className={styles.search}
+              placeholder="Search Name…"
+              value={searchvalue}
+              onChange={(e) => setsearchvalue(e.target.value)}
+            />
+          </div>
+          <div className={styles.searchbar}>
+            <input
+              type="date"
+              className={styles.search}
+              placeholder="Search Name…"
+              value={searchbydate}
+              onChange={(e) => setsearchbydate(e.target.value)}
+            />
+          </div>
+          <div className={styles.searchbar}>
+            <select
+              className={styles.select}
+              value={sortval}
+              onChange={(e) => setsortval(e.target.value)}
+            >
+              {options.map((option) => {
+                return <option value={option.value}>{option.Label}</option>;
+              })}
+            </select>
+          </div>
         </div>
-      ) : (
-        <div></div>
-      )}
-    </div>
-  );
+        {searchvalue.length > 0 ? (
+          <div className={styles.flexwrapper}>
+            {searchdata.map((x, i) => {
+              if (details[x].districts) {
+                return (
+                  <div className={styles.card}>
+                    <div className={styles.heading}>
+                      <p
+                        className={styles.statename}
+                        onClick={() => handlepage(x)}
+                      >
+                        {x}
+                      </p>
+                      <select
+                        className={styles.selectone}
+                        value={districts}
+                        onChange={(e) => setdistricts(e.target.value)}
+                      >
+                        {Object.keys(details[x].districts).map((y) => {
+                          return <option value={y}>{y}</option>;
+                        })}
+                      </select>
+                    </div>
+
+                    <div className={styles.content}>
+                      {Object.keys(details[x].districts).map((y, index) => {
+                        if (index == i) {
+                          return (
+                            <>
+                              <p>
+                                Confirmed :{" "}
+                                {details[x].districts[y].total == undefined
+                                  ? 0
+                                  : details[x].districts[y].total.confirmed
+                                  ? details[x].districts[y].total.confirmed
+                                  : 0}
+                              </p>
+                              <p>
+                                Recovered :{" "}
+                                {details[x].districts[y].total == undefined
+                                  ? 0
+                                  : details[x].districts[y].total.recovered
+                                  ? details[x].districts[y].total.recovered
+                                  : 0}
+                              </p>
+                              <p>
+                                Deceased :{" "}
+                                {details[x].districts[y].total == undefined
+                                  ? 0
+                                  : details[x].districts[y].total.deceased
+                                  ? details[x].districts[y].total.deceased
+                                  : 0}
+                              </p>
+                            </>
+                          );
+                        }
+                      })}
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </div>
+        ) : (
+          <div className={styles.flexwrapper}>
+            {sortval == "asce" || sortval == ""
+              ? data.map((x, i) => {
+                  if (details[x].districts) {
+                    return (
+                      <div className={styles.card}>
+                        <div className={styles.heading}>
+                          <p
+                            className={styles.statename}
+                            onClick={() => handlepage(x)}
+                          >
+                            {x}
+                          </p>
+                          <select
+                            className={styles.selectone}
+                            value={districts}
+                            onChange={(e) => setdistricts(e.target.value)}
+                          >
+                            {Object.keys(details[x].districts).map((y) => {
+                              return <option value={y}>{y}</option>;
+                            })}
+                          </select>
+                        </div>
+
+                        <div className={styles.content}>
+                          {Object.keys(details[x].districts).map((y, index) => {
+                            if (index == i) {
+                              return (
+                                <>
+                                  <p>
+                                    Confirmed :{" "}
+                                    {details[x].districts[y].total == undefined
+                                      ? 0
+                                      : details[x].districts[y].total.confirmed
+                                      ? details[x].districts[y].total.confirmed
+                                      : 0}
+                                  </p>
+                                  <p>
+                                    Recovered :{" "}
+                                    {details[x].districts[y].total == undefined
+                                      ? 0
+                                      : details[x].districts[y].total.recovered
+                                      ? details[x].districts[y].total.recovered
+                                      : 0}
+                                  </p>
+                                  <p>
+                                    Deceased :{" "}
+                                    {details[x].districts[y].total == undefined
+                                      ? 0
+                                      : details[x].districts[y].total.deceased
+                                      ? details[x].districts[y].total.deceased
+                                      : 0}
+                                  </p>
+                                </>
+                              );
+                            }
+                          })}
+                        </div>
+                      </div>
+                    );
+                  }
+                })
+              : data
+                  .sort()
+                  .reverse()
+                  .map((x, i) => {
+                    if (details[x].districts) {
+                      return (
+                        <div className={styles.card}>
+                          <div className={styles.heading}>
+                            <p
+                              className={styles.statename}
+                              onClick={() => handlepage(x)}
+                            >
+                              {x}
+                            </p>
+                            <select
+                              className={styles.selectone}
+                              value={sortval}
+                              onChange={(e) => setsortval(e.target.value)}
+                            >
+                              {Object.keys(details[x].districts).map((y) => {
+                                return <option value={y}>{y}</option>;
+                              })}
+                            </select>
+                          </div>
+
+                          <div className={styles.content}>
+                            {Object.keys(details[x].districts).map(
+                              (y, index) => {
+                                if (index == i) {
+                                  return (
+                                    <>
+                                      <p>
+                                        Confirmed :{" "}
+                                        {details[x].districts[y].total ==
+                                        undefined
+                                          ? 0
+                                          : details[x].districts[y].total
+                                              .confirmed
+                                          ? details[x].districts[y].total
+                                              .confirmed
+                                          : 0}
+                                      </p>
+                                      <p>
+                                        Recovered :{" "}
+                                        {details[x].districts[y].total ==
+                                        undefined
+                                          ? 0
+                                          : details[x].districts[y].total
+                                              .recovered
+                                          ? details[x].districts[y].total
+                                              .recovered
+                                          : 0}
+                                      </p>
+                                      <p>
+                                        Deceased :{" "}
+                                        {details[x].districts[y].total ==
+                                        undefined
+                                          ? 0
+                                          : details[x].districts[y].total
+                                              .deceased
+                                          ? details[x].districts[y].total
+                                              .deceased
+                                          : 0}
+                                      </p>
+                                    </>
+                                  );
+                                }
+                              }
+                            )}
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return <div>{details ? renderUI() : null}</div>;
 }
