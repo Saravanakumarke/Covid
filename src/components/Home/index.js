@@ -9,6 +9,8 @@ export default function Home() {
   const [searchbydate, setsearchbydate] = useState(new Date());
   const [sortval, setsortval] = useState("asce");
   const [districts, setdistricts] = useState("");
+  const [slideIndex, setSlideIndex] = useState(1);
+  let check = "Total";
   let data = [];
 
   useEffect(() => {
@@ -44,6 +46,16 @@ export default function Home() {
     console.log(searchdata);
   }
 
+  if (slideIndex == 1) {
+    console.log(slideIndex, check);
+    check = "Total";
+  } else if (slideIndex == 2) {
+    check = "Delta";
+    console.log(slideIndex, check);
+  } else {
+    check = "Delta7";
+    console.log(slideIndex, check);
+  }
   let renderUI = () => {
     return (
       <div>
@@ -111,34 +123,88 @@ export default function Home() {
                         if (index == i) {
                           return (
                             <>
-                              <p>
-                                Confirmed :{" "}
-                                {details[x].districts[y].total == undefined
-                                  ? 0
-                                  : details[x].districts[y].total.confirmed
-                                  ? details[x].districts[y].total.confirmed
-                                  : 0}
-                              </p>
-                              <p>
-                                Recovered :{" "}
-                                {details[x].districts[y].total == undefined
-                                  ? 0
-                                  : details[x].districts[y].total.recovered
-                                  ? details[x].districts[y].total.recovered
-                                  : 0}
-                              </p>
-                              <p>
-                                Deceased :{" "}
-                                {details[x].districts[y].total == undefined
-                                  ? 0
-                                  : details[x].districts[y].total.deceased
-                                  ? details[x].districts[y].total.deceased
-                                  : 0}
-                              </p>
+                              <div className={styles.slider}>
+                                <div
+                                  onClick={() =>
+                                    setSlideIndex(
+                                      slideIndex === 3 ? 1 : slideIndex + 1
+                                    )
+                                  }
+                                >
+                                  {slideIndex == 1 ? null : (
+                                    <i class="fas fa-chevron-left"></i>
+                                  )}
+                                </div>
+                                <div>
+                                  <p className={styles.subname}>{check}</p>
+                                  <p>
+                                    Confirmed :{" "}
+                                    {details[x].districts[y][
+                                      check.toLowerCase()
+                                    ] == undefined
+                                      ? 0
+                                      : details[x].districts[y][
+                                          check.toLowerCase()
+                                        ].confirmed
+                                      ? details[x].districts[y][
+                                          check.toLowerCase()
+                                        ].confirmed
+                                      : 0}
+                                  </p>
+                                  <p>
+                                    Recovered :{" "}
+                                    {details[x].districts[y][
+                                      check.toLowerCase()
+                                    ] == undefined
+                                      ? 0
+                                      : details[x].districts[y][
+                                          check.toLowerCase()
+                                        ].recovered
+                                      ? details[x].districts[y][
+                                          check.toLowerCase()
+                                        ].recovered
+                                      : 0}
+                                  </p>
+                                  <p>
+                                    Deceased :{" "}
+                                    {details[x].districts[y][
+                                      check.toLowerCase()
+                                    ] == undefined
+                                      ? 0
+                                      : details[x].districts[y][
+                                          check.toLowerCase()
+                                        ].deceased
+                                      ? details[x].districts[y][
+                                          check.toLowerCase()
+                                        ].deceased
+                                      : 0}
+                                  </p>
+                                </div>
+                                <div
+                                  onClick={() =>
+                                    setSlideIndex(
+                                      slideIndex === 1 ? 3 : slideIndex - 1
+                                    )
+                                  }
+                                >
+                                  {slideIndex == 2 ? null : (
+                                    <i class="fas fa-chevron-right"></i>
+                                  )}
+                                </div>
+                              </div>
                             </>
                           );
                         }
                       })}
+                      <div
+                        onClick={() =>
+                          setSlideIndex(slideIndex === 1 ? 3 : slideIndex - 1)
+                        }
+                      >
+                        {slideIndex == 2 ? null : (
+                          <i class="fas fa-chevron-right"></i>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
@@ -175,30 +241,75 @@ export default function Home() {
                             if (index == i) {
                               return (
                                 <>
-                                  <p>
-                                    Confirmed :{" "}
-                                    {details[x].districts[y].total == undefined
-                                      ? 0
-                                      : details[x].districts[y].total.confirmed
-                                      ? details[x].districts[y].total.confirmed
-                                      : 0}
-                                  </p>
-                                  <p>
-                                    Recovered :{" "}
-                                    {details[x].districts[y].total == undefined
-                                      ? 0
-                                      : details[x].districts[y].total.recovered
-                                      ? details[x].districts[y].total.recovered
-                                      : 0}
-                                  </p>
-                                  <p>
-                                    Deceased :{" "}
-                                    {details[x].districts[y].total == undefined
-                                      ? 0
-                                      : details[x].districts[y].total.deceased
-                                      ? details[x].districts[y].total.deceased
-                                      : 0}
-                                  </p>
+                                  <div className={styles.slider}>
+                                    <div
+                                      onClick={() =>
+                                        setSlideIndex(
+                                          slideIndex === 3 ? 1 : slideIndex + 1
+                                        )
+                                      }
+                                    >
+                                      {slideIndex == 1 ? null : (
+                                        <i class="fas fa-chevron-left"></i>
+                                      )}
+                                    </div>
+                                    <div>
+                                      <p className={styles.subname}>{check}</p>
+                                      <p>
+                                        Confirmed :{" "}
+                                        {details[x].districts[y][
+                                          check.toLowerCase()
+                                        ] == undefined
+                                          ? 0
+                                          : details[x].districts[y][
+                                              check.toLowerCase()
+                                            ].confirmed
+                                          ? details[x].districts[y][
+                                              check.toLowerCase()
+                                            ].confirmed
+                                          : 0}
+                                      </p>
+                                      <p>
+                                        Recovered :{" "}
+                                        {details[x].districts[y][
+                                          check.toLowerCase()
+                                        ] == undefined
+                                          ? 0
+                                          : details[x].districts[y][
+                                              check.toLowerCase()
+                                            ].recovered
+                                          ? details[x].districts[y][
+                                              check.toLowerCase()
+                                            ].recovered
+                                          : 0}
+                                      </p>
+                                      <p>
+                                        Deceased :{" "}
+                                        {details[x].districts[y][
+                                          check.toLowerCase()
+                                        ] == undefined
+                                          ? 0
+                                          : details[x].districts[y][
+                                              check.toLowerCase()
+                                            ].deceased
+                                          ? details[x].districts[y][
+                                              check.toLowerCase()
+                                            ].deceased
+                                          : 0}
+                                      </p>
+                                    </div>
+                                    <div
+                                      onClick={() =>
+                                        setSlideIndex(
+                                          slideIndex === 1 ? 3 : slideIndex - 1
+                                        )
+                                      }
+                                    >
+                                      {slideIndex == 2 ? null : (
+                                        <i class="fas fa-chevron-right"></i>
+                                      )}
+                                    </div>
+                                  </div>
                                 </>
                               );
                             }
@@ -224,8 +335,8 @@ export default function Home() {
                             </p>
                             <select
                               className={styles.selectone}
-                              value={sortval}
-                              onChange={(e) => setsortval(e.target.value)}
+                              value={districts}
+                              onChange={(e) => setdistricts(e.target.value)}
                             >
                               {Object.keys(details[x].districts).map((y) => {
                                 return <option value={y}>{y}</option>;
@@ -239,39 +350,81 @@ export default function Home() {
                                 if (index == i) {
                                   return (
                                     <>
-                                      <p>
-                                        Confirmed :{" "}
-                                        {details[x].districts[y].total ==
-                                        undefined
-                                          ? 0
-                                          : details[x].districts[y].total
-                                              .confirmed
-                                          ? details[x].districts[y].total
-                                              .confirmed
-                                          : 0}
-                                      </p>
-                                      <p>
-                                        Recovered :{" "}
-                                        {details[x].districts[y].total ==
-                                        undefined
-                                          ? 0
-                                          : details[x].districts[y].total
-                                              .recovered
-                                          ? details[x].districts[y].total
-                                              .recovered
-                                          : 0}
-                                      </p>
-                                      <p>
-                                        Deceased :{" "}
-                                        {details[x].districts[y].total ==
-                                        undefined
-                                          ? 0
-                                          : details[x].districts[y].total
-                                              .deceased
-                                          ? details[x].districts[y].total
-                                              .deceased
-                                          : 0}
-                                      </p>
+                                      <div className={styles.slider}>
+                                        <div
+                                          onClick={() =>
+                                            setSlideIndex(
+                                              slideIndex === 3
+                                                ? 1
+                                                : slideIndex + 1
+                                            )
+                                          }
+                                        >
+                                          {slideIndex == 1 ? null : (
+                                            <i class="fas fa-chevron-left"></i>
+                                          )}
+                                        </div>
+                                        <div>
+                                          <p className={styles.subname}>
+                                            {check}
+                                          </p>
+                                          <p>
+                                            Confirmed :{" "}
+                                            {details[x].districts[y][
+                                              check.toLowerCase()
+                                            ] == undefined
+                                              ? 0
+                                              : details[x].districts[y][
+                                                  check.toLowerCase()
+                                                ].confirmed
+                                              ? details[x].districts[y][
+                                                  check.toLowerCase()
+                                                ].confirmed
+                                              : 0}
+                                          </p>
+                                          <p>
+                                            Recovered :{" "}
+                                            {details[x].districts[y][
+                                              check.toLowerCase()
+                                            ] == undefined
+                                              ? 0
+                                              : details[x].districts[y][
+                                                  check.toLowerCase()
+                                                ].recovered
+                                              ? details[x].districts[y][
+                                                  check.toLowerCase()
+                                                ].recovered
+                                              : 0}
+                                          </p>
+                                          <p>
+                                            Deceased :{" "}
+                                            {details[x].districts[y][
+                                              check.toLowerCase()
+                                            ] == undefined
+                                              ? 0
+                                              : details[x].districts[y][
+                                                  check.toLowerCase()
+                                                ].deceased
+                                              ? details[x].districts[y][
+                                                  check.toLowerCase()
+                                                ].deceased
+                                              : 0}
+                                          </p>
+                                        </div>
+                                        <div
+                                          onClick={() =>
+                                            setSlideIndex(
+                                              slideIndex === 1
+                                                ? 3
+                                                : slideIndex - 1
+                                            )
+                                          }
+                                        >
+                                          {slideIndex == 2 ? null : (
+                                            <i class="fas fa-chevron-right"></i>
+                                          )}
+                                        </div>
+                                      </div>
                                     </>
                                   );
                                 }
