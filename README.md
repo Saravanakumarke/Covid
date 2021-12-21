@@ -33,9 +33,3 @@ Demo app link [Link](https://customercontenthub.netlify.app/)
 To know more about me [Portfolio](https://saravana.netlify.app/)
 
 Tech Blog [Articles](https://saravana-blog.netlify.app/)
-
-## App Screenshot
-
-<div align="center">
-    <img src="src/components/Images/india.png" width="400px"</img> 
-</div>
