@@ -37,5 +37,5 @@ Tech Blog [Articles](https://saravana-blog.netlify.app/)
 ## App Screenshot
 
 <div align="center">
-    <img src="/screenshots/screen1.jpg" width="400px"</img> 
+    <img src="../src/components/Images/india.png" width="400px"</img> 
 </div>
