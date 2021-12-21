@@ -46,6 +46,7 @@ export default function Home() {
     console.log(searchdata);
   }
 
+  //Slider functionality
   if (slideIndex == 1) {
     console.log(slideIndex, check);
     check = "Total";
@@ -56,6 +57,7 @@ export default function Home() {
     check = "Delta7";
     console.log(slideIndex, check);
   }
+
   let renderUI = () => {
     return (
       <div>
@@ -94,6 +96,8 @@ export default function Home() {
             </select>
           </div>
         </div>
+
+        {/* States Cards */}
         {searchvalue.length > 0 ? (
           <div className={styles.flexwrapper}>
             {searchdata.map((x, i) => {
@@ -125,6 +129,7 @@ export default function Home() {
                             <>
                               <div className={styles.slider}>
                                 <div
+                                  className={styles.arrow}
                                   onClick={() =>
                                     setSlideIndex(
                                       slideIndex === 3 ? 1 : slideIndex + 1
@@ -132,7 +137,7 @@ export default function Home() {
                                   }
                                 >
                                   {slideIndex == 1 ? null : (
-                                    <i class="fas fa-chevron-left"></i>
+                                    <i className="fas fa-chevron-left"></i>
                                   )}
                                 </div>
                                 <div>
@@ -181,6 +186,7 @@ export default function Home() {
                                   </p>
                                 </div>
                                 <div
+                                  className={styles.arrow}
                                   onClick={() =>
                                     setSlideIndex(
                                       slideIndex === 1 ? 3 : slideIndex - 1
@@ -202,7 +208,7 @@ export default function Home() {
                         }
                       >
                         {slideIndex == 2 ? null : (
-                          <i class="fas fa-chevron-right"></i>
+                          <i className="fas fa-chevron-right"></i>
                         )}
                       </div>
                     </div>
@@ -243,6 +249,7 @@ export default function Home() {
                                 <>
                                   <div className={styles.slider}>
                                     <div
+                                      className={styles.arrow}
                                       onClick={() =>
                                         setSlideIndex(
                                           slideIndex === 3 ? 1 : slideIndex + 1
@@ -250,7 +257,7 @@ export default function Home() {
                                       }
                                     >
                                       {slideIndex == 1 ? null : (
-                                        <i class="fas fa-chevron-left"></i>
+                                        <i className="fas fa-chevron-left"></i>
                                       )}
                                     </div>
                                     <div>
@@ -299,6 +306,7 @@ export default function Home() {
                                       </p>
                                     </div>
                                     <div
+                                      className={styles.arrow}
                                       onClick={() =>
                                         setSlideIndex(
                                           slideIndex === 1 ? 3 : slideIndex - 1
@@ -306,7 +314,7 @@ export default function Home() {
                                       }
                                     >
                                       {slideIndex == 2 ? null : (
-                                        <i class="fas fa-chevron-right"></i>
+                                        <i className="fas fa-chevron-right"></i>
                                       )}
                                     </div>
                                   </div>
@@ -352,6 +360,7 @@ export default function Home() {
                                     <>
                                       <div className={styles.slider}>
                                         <div
+                                          className={styles.arrow}
                                           onClick={() =>
                                             setSlideIndex(
                                               slideIndex === 3
@@ -361,7 +370,7 @@ export default function Home() {
                                           }
                                         >
                                           {slideIndex == 1 ? null : (
-                                            <i class="fas fa-chevron-left"></i>
+                                            <i className="fas fa-chevron-left"></i>
                                           )}
                                         </div>
                                         <div>
@@ -412,6 +421,7 @@ export default function Home() {
                                           </p>
                                         </div>
                                         <div
+                                          className={styles.arrow}
                                           onClick={() =>
                                             setSlideIndex(
                                               slideIndex === 1
@@ -421,7 +431,7 @@ export default function Home() {
                                           }
                                         >
                                           {slideIndex == 2 ? null : (
-                                            <i class="fas fa-chevron-right"></i>
+                                            <i className="fas fa-chevron-right"></i>
                                           )}
                                         </div>
                                       </div>
