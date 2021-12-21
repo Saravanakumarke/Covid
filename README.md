@@ -24,7 +24,7 @@ This is a task of creating Covid tracker Application
 
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Demo app link [Link](https://covidtracker37.netlify.app//)
+Demo app link [Link](https://covidtracker37.netlify.app)
 
 ## Contact
 
