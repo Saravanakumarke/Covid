@@ -32,7 +32,6 @@ export default function Home() {
 
   //Navigate to details page
   const handlepage = (x) => {
-    console.log(details[x]);
     history.push({
       pathname: `/state/${x}`,
       state: details[x],

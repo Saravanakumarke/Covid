@@ -5,13 +5,15 @@ export default function Details(props) {
   const [searchbydate, setsearchbydate] = useState(new Date());
   const [sortval, setsortval] = useState("");
   const [sortdis, setsortdis] = useState("");
+  const details = props.location.state;
+  const statename = window.location.pathname.split("/")[2];
   const options = [
     { id: 1, Label: "Sort By", value: "" },
     { id: 2, Label: "Ascending", value: "asce" },
     { id: 3, Label: "Descending", value: "desce" },
   ];
   let searchdata = [];
-  let data;
+  let data = [];
 
   useEffect(() => {
     const getdata = async () => {
@@ -22,10 +24,14 @@ export default function Details(props) {
     getdata();
   }, []);
 
-  const details = props.location.state;
-  const statename = window.location.pathname.split("/")[2];
-  data = Object.keys(statedetails[statename].dates);
-  console.log(Object.keys(statedetails[statename].dates));
+  if (statedetails[statename]) {
+    localStorage.setItem(
+      "State",
+      JSON.stringify(Object.keys(statedetails[statename].dates))
+    );
+    data = localStorage.getItem("State");
+    data = JSON.parse(data);
+  }
 
   //Date Filter
   if (searchbydate.length > 0) {
@@ -200,8 +206,8 @@ export default function Details(props) {
                 {data.map((x) => {
                   return (
                     <tr>
-                      <td>{x}</td>
-                      <td>
+                      <td data-column="Date">{x}</td>
+                      <td data-column="Confirmed">
                         {" "}
                         {statedetails[statename].dates[x].total == undefined
                           ? 0
@@ -209,7 +215,7 @@ export default function Details(props) {
                           ? statedetails[statename].dates[x].total.confirmed
                           : 0}
                       </td>
-                      <td>
+                      <td data-column="Recovered">
                         {" "}
                         {statedetails[statename].dates[x].total == undefined
                           ? 0
@@ -217,7 +223,7 @@ export default function Details(props) {
                           ? statedetails[statename].dates[x].total.recovered
                           : 0}
                       </td>
-                      <td>
+                      <td data-column="Deceased">
                         {" "}
                         {statedetails[statename].dates[x].total == undefined
                           ? 0
@@ -225,7 +231,7 @@ export default function Details(props) {
                           ? statedetails[statename].dates[x].total.deceased
                           : 0}
                       </td>
-                      <td>
+                      <td data-column="Delta">
                         <p>
                           Confirmed :{" "}
                           {statedetails[statename].dates[x].delta == undefined
@@ -251,7 +257,7 @@ export default function Details(props) {
                             : 0}
                         </p>
                       </td>
-                      <td>
+                      <td data-column="Delta7">
                         <p>
                           Confirmed :{" "}
                           {statedetails[statename].dates[x].delta7 == undefined

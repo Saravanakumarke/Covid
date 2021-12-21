@@ -129,6 +129,12 @@ td {
     padding-left: 50%;
   }
 
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
   td:before {
     position: absolute;
     top: 6px;
