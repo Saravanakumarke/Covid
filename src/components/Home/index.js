@@ -5,8 +5,12 @@ import { useHistory } from "react-router-dom";
 export default function Home() {
   const history = useHistory();
   const [details, setDetails] = useState(null || {});
-  const [flage, setflage] = useState(false);
+  const [searchvalue, setsearchvalue] = useState("");
+  const [searchbydate, setsearchbydate] = useState(new Date());
+  const [sortval, setsortval] = useState("asce");
+  const [districts, setdistricts] = useState("");
   let data = [];
+
   useEffect(() => {
     const getdata = async () => {
       await fetch("https://data.covid19india.org/v4/min/data.min.json")
@@ -16,20 +20,17 @@ export default function Home() {
 
     getdata();
   }, []);
+
   let searchdata = [];
   data = Object.keys(details);
-  const [searchvalue, setsearchvalue] = useState("");
-  const [searchbydate, setsearchbydate] = useState(new Date());
-  const [sortval, setsortval] = useState("asce");
-  const [districts, setdistricts] = useState("");
 
-  //console.log(details ? details.AN.districts.Nicobars.total.vaccinated1 : null);
   const options = [
     { id: 1, Label: "Sort By", value: "" },
     { id: 2, Label: "Ascending", value: "asce" },
     { id: 3, Label: "Descending", value: "desce" },
   ];
 
+  //Navigate to details page
   const handlepage = (x) => {
     console.log(details[x]);
     history.push({
@@ -37,12 +38,13 @@ export default function Home() {
       state: details[x],
     });
   };
+
+  //Search functionality
   if (searchvalue.length > 0) {
     searchdata = data.filter((x) => x == searchvalue.toUpperCase());
     console.log(searchdata);
   }
 
-  console.log(districts);
   let renderUI = () => {
     return (
       <div>

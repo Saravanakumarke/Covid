@@ -12,8 +12,9 @@ nav {
   width: 100%;
   position: relative;
   display: block;
-  font-family: Poppins;
-  background-color: rgba(234, 243, 237, 0.125);
+  font-family: var(--font);
+  background-color: var(--text-orange);
+  color: var(--bg-white);
   top: 0;
 }
 .heading {
@@ -23,7 +24,7 @@ nav {
 .container {
   display: flex;
   flex-wrap: wrap;
-  font-family: Poppins;
+  font-family: var(--font);
 }
 .searchbar {
   padding-top: 2rem;
@@ -36,14 +37,14 @@ nav {
   box-sizing: border-box;
   height: 2.5em;
   width: 20em;
-  font-family: Poppins;
+  font-family: var(--font);
 }
 input[type="text"]::placeholder {
   padding-left: 10px;
 }
 input:focus {
-  background-color: #fff;
-  border: 0.25px solid #655afc;
+  background-color: var(--bg-white);
+  border: 0.25px solid rgba(0, 0, 0, 0.2);
   outline: none;
 }
 .select {
@@ -51,7 +52,8 @@ input:focus {
   height: 2.3125rem;
   border: 1px solid rgba(0, 0, 0, 0.2);
   width: 20em;
-  font-family: Poppins;
+  font-family: var(--font);
+  background-color: rgb(253, 238, 238);
 }
 
 .select:hover {
@@ -63,7 +65,8 @@ input:focus {
   border: 1px solid rgba(0, 0, 0, 0.2);
   width: 10em;
   margin-top: 15px;
-  font-family: Poppins;
+  font-family: var(--font);
+  background-color: rgb(253, 238, 238);
 }
 
 .selectone:hover {
@@ -102,4 +105,16 @@ input:focus {
   text-align: center;
   padding: 2px;
   margin: 0 auto;
+}
+
+@media only screen and (max-width: 760px),
+  (min-device-width: 308px) and (max-device-width: 1024px) {
+  nav .heading {
+    display: flex;
+    justify-content: center;
+  }
+  .searchbar {
+    padding-top: 2rem;
+    padding-left: 3em;
+  }
 }

@@ -1,12 +1,22 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins");
 
+:root {
+  --bg-white: #ffffff;
+  --black: #000000;
+  --text-grey: rgba(0, 0, 0, 0.6);
+  --text-orange: #e16259;
+  --font: Poppins;
+}
+
 nav {
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
   width: 100%;
   position: relative;
   display: block;
-  font-family: Poppins;
+  font-family: var(--font);
   background-color: rgba(234, 243, 237, 0.125);
+  background-color: var(--text-orange);
+  color: var(--bg-white);
   top: 0;
 }
 .heading {
@@ -16,10 +26,7 @@ nav {
 .container {
   display: flex;
   flex-wrap: wrap;
-  font-family: Poppins;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 3.25rem;
+  font-family: var(--font);
 }
 
 .search {
@@ -28,7 +35,7 @@ nav {
   box-sizing: border-box;
   height: 2.5em;
   width: 20em;
-  font-family: Poppins;
+  font-family: var(--font);
 }
 input[type="text"]::placeholder {
   padding-left: 10px;
@@ -43,7 +50,8 @@ input:focus {
   height: 2.3125rem;
   border: 1px solid rgba(0, 0, 0, 0.2);
   width: 20em;
-  font-family: Poppins;
+  font-family: var(--font);
+  background-color: rgb(253, 238, 238);
 }
 
 .select:hover {
@@ -53,8 +61,13 @@ input:focus {
   font-weight: bold;
   font-size: 20px;
   color: #000;
+  padding-top: 2rem;
+  padding-left: 5em;
 }
-
+.searchbar {
+  padding-top: 2rem;
+  padding-left: 5em;
+}
 .nodata {
   font-weight: bold;
   font-size: 20px;
@@ -63,13 +76,14 @@ input:focus {
   left: 50%;
   margin-top: 3.25rem;
 }
+
 /**Table **/
 
 table {
   width: 100%;
   border-collapse: collapse;
   margin: 50px auto;
-  font-family: Poppins;
+  font-family: var(--font);
 }
 
 th {
@@ -104,12 +118,6 @@ td {
     display: block;
   }
 
-  thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-
   tr {
     border: 1px solid #ccc;
   }
@@ -129,8 +137,19 @@ td {
     padding-right: 10px;
     white-space: nowrap;
     content: attr(data-column);
-
     color: #000;
     font-weight: bold;
+  }
+}
+
+@media only screen and (max-width: 760px),
+  (min-device-width: 308px) and (max-device-width: 1024px) {
+  nav .heading {
+    display: flex;
+    justify-content: center;
+  }
+  .searchbar {
+    padding-top: 2rem;
+    padding-left: 3em;
   }
 }

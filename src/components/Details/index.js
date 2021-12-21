@@ -2,6 +2,17 @@ import React, { useState, useEffect } from "react";
 import styles from "./style.module.css";
 export default function Details(props) {
   const [statedetails, setstatedetails] = useState(null || {});
+  const [searchbydate, setsearchbydate] = useState(new Date());
+  const [sortval, setsortval] = useState("");
+  const [sortdis, setsortdis] = useState("");
+  const options = [
+    { id: 1, Label: "Sort By", value: "" },
+    { id: 2, Label: "Ascending", value: "asce" },
+    { id: 3, Label: "Descending", value: "desce" },
+  ];
+  let searchdata = [];
+  let data;
+
   useEffect(() => {
     const getdata = async () => {
       await fetch("https://data.covid19india.org/v4/min/timeseries.min.json")
@@ -13,33 +24,25 @@ export default function Details(props) {
 
   const details = props.location.state;
   const statename = window.location.pathname.split("/")[2];
-  let data;
   data = Object.keys(statedetails[statename].dates);
   console.log(Object.keys(statedetails[statename].dates));
-  const [searchbydate, setsearchbydate] = useState(new Date());
-  const [sortval, setsortval] = useState("");
-  const [sortdis, setsortdis] = useState("");
-  const options = [
-    { id: 1, Label: "Sort By", value: "asce" },
-    { id: 2, Label: "Ascending", value: "asce" },
-    { id: 3, Label: "Descending", value: "desce" },
-  ];
-  let searchdata = [];
+
+  //Date Filter
   if (searchbydate.length > 0) {
     searchdata = Object.keys(statedetails[statename].dates).filter(
       (x) => x == searchbydate
     );
   }
+
+  // Sorting Filter
   if (sortval == "asce") {
     data.sort(function (a, b) {
       return new Date(a) - new Date(b);
     });
-    console.log(data);
   } else {
     data.sort(function (a, b) {
       return new Date(b) - new Date(a);
     });
-    console.log(data);
   }
   let renderUI = () => {
     return (
@@ -99,8 +102,8 @@ export default function Details(props) {
                   searchdata.map((x) => {
                     return (
                       <tr>
-                        <td>{x}</td>
-                        <td>
+                        <td data-column="Date">{x}</td>
+                        <td data-column="Confirmed">
                           {" "}
                           {statedetails[statename].dates[x].total == undefined
                             ? 0
@@ -108,7 +111,7 @@ export default function Details(props) {
                             ? statedetails[statename].dates[x].total.confirmed
                             : 0}
                         </td>
-                        <td>
+                        <td data-column="Recovered">
                           {" "}
                           {statedetails[statename].dates[x].total == undefined
                             ? 0
@@ -116,7 +119,7 @@ export default function Details(props) {
                             ? statedetails[statename].dates[x].total.recovered
                             : 0}
                         </td>
-                        <td>
+                        <td data-column="Deceased">
                           {" "}
                           {statedetails[statename].dates[x].total == undefined
                             ? 0
@@ -124,7 +127,7 @@ export default function Details(props) {
                             ? statedetails[statename].dates[x].total.deceased
                             : 0}
                         </td>
-                        <td>
+                        <td data-column="Delta">
                           <p>
                             Confirmed :{" "}
                             {statedetails[statename].dates[x].delta == undefined
@@ -150,7 +153,7 @@ export default function Details(props) {
                               : 0}
                           </p>
                         </td>
-                        <td>
+                        <td data-column="Delta7">
                           <p>
                             Confirmed :{" "}
                             {statedetails[statename].dates[x].delta7 ==
